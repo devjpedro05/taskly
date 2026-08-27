@@ -4,7 +4,7 @@ Sistema Web para organização e gerenciamento de atividades acadêmicas.
 
 ## Sobre o projeto
 
-O Taskly é um projeto acadêmico incremental da disciplina Tecnologia de Construção de Software I. A aplicação pretende centralizar atividades, trabalhos, avaliações e prazos acadêmicos em uma interface Web simples.
+O Taskly é um projeto acadêmico incremental da disciplina Tecnologia de Construção de Software I. A Etapa 01 estabelece o problema, o público-alvo, o escopo funcional e a arquitetura inicial da aplicação.
 
 ## Problema
 
@@ -23,16 +23,15 @@ Permitir que estudantes cadastrem, organizem, acompanhem e consultem suas ativid
 - identificar atrasos e prazos próximos;
 - apresentar um resumo das atividades no Dashboard.
 
-Estas funcionalidades constituem o escopo previsto. Na Etapa 01, apenas a fundação técnica e a especificação foram preparadas.
+As funcionalidades são apenas especificadas nesta etapa. Não há implementação de frontend, backend ou banco de dados.
 
-## Tecnologias
+## Tecnologias propostas
 
 ### Frontend
 
 - React;
 - TypeScript;
-- Vite;
-- CSS convencional.
+- Vite.
 
 ### Backend
 
@@ -42,18 +41,19 @@ Estas funcionalidades constituem o escopo previsto. Na Etapa 01, apenas a funda�
 
 ### Banco de dados
 
-- SQLite, previsto para as próximas etapas.
+- SQLite.
+
+A adoção dessas tecnologias está documentada para orientar as próximas etapas, sem arquivos de código ou dependências nesta entrega.
 
 ## Estrutura do projeto
 
 ```text
 taskly/
-├── backend/          # API REST
+├── backend/          # pasta reservada para implementação futura
 ├── docs/             # proposta, arquitetura e evidências
-├── frontend/         # aplicação Web
-├── tests/            # espaço para testes integrados futuros
+├── frontend/         # pasta reservada para implementação futura
+├── tests/            # pasta reservada para testes futuros
 ├── .gitignore
-├── LICENSE
 └── README.md
 ```
 
@@ -65,55 +65,11 @@ taskly/
 
 ## Execução
 
-Pré-requisito: Node.js 20 ou versão superior.
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-O Vite informará no terminal o endereço local da aplicação. Para gerar a versão de produção:
-
-```bash
-npm run build
-```
-
-### Backend
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-A API utiliza por padrão a porta `3000`. Verificação de saúde:
-
-```http
-GET http://localhost:3000/health
-```
-
-Resposta esperada:
-
-```json
-{
-  "status": "ok",
-  "application": "Taskly"
-}
-```
-
-Para compilar e executar o código compilado:
-
-```bash
-npm run build
-npm start
-```
+Não há aplicação executável na Etapa 01. Comandos de instalação e execução serão documentados quando o frontend e o backend forem implementados.
 
 ## Status do projeto
 
-Fundação inicial executável, preparada para evolução incremental. O CRUD e a persistência ainda não fazem parte desta entrega.
+Proposta e especificação inicial concluídas. As pastas técnicas estão vazias e reservadas para evolução incremental.
 
 ## Etapa atual
 
@@ -121,11 +77,9 @@ Etapa 01 — Proposta e Especificação.
 
 ## Roadmap
 
-- Etapa 01: proposta, especificação, arquitetura e scaffolds;
-- próximas etapas: modelo de dados SQLite, operações da API, interfaces funcionais e testes automatizados.
-
-O detalhamento das etapas seguintes será ajustado aos requisitos da disciplina.
+- Etapa 01: proposta, especificação e arquitetura inicial;
+- próximas etapas: implementação incremental conforme os requisitos da disciplina.
 
 ## Licença
 
-Distribuído sob a licença MIT. Consulte [LICENSE](LICENSE).
+A licença do projeto será definida em etapa futura.

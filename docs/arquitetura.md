@@ -2,7 +2,7 @@
 
 ## Visão geral
 
-O Taskly adota inicialmente uma arquitetura Web cliente-servidor simples. A interface React é executada no navegador e consulta uma API REST Express. A API será responsável pelas regras da aplicação e pela persistência no SQLite.
+O Taskly prevê inicialmente uma arquitetura Web cliente-servidor simples. Quando implementada, a interface React será executada no navegador e consultará uma API REST Express. A API será responsável pelas regras da aplicação e pela persistência no SQLite.
 
 ```mermaid
 flowchart LR
@@ -18,7 +18,7 @@ flowchart LR
 
 ## Frontend
 
-O frontend utiliza React, TypeScript e Vite. Suas responsabilidades previstas são:
+O frontend utilizará React, TypeScript e Vite em uma etapa futura. Suas responsabilidades previstas são:
 
 - apresentar as quatro interfaces definidas na proposta;
 - coletar e validar dados de entrada no nível de interface;
@@ -26,7 +26,7 @@ O frontend utiliza React, TypeScript e Vite. Suas responsabilidades previstas s�
 - apresentar respostas, estados de carregamento e erros;
 - calcular apenas comportamentos estritamente visuais.
 
-Organização inicial relevante:
+Organização futura sugerida, ainda não criada nesta etapa:
 
 ```text
 frontend/src/
@@ -40,7 +40,7 @@ frontend/src/
 
 ## Backend
 
-O backend utiliza Node.js, TypeScript e Express. Suas responsabilidades previstas são:
+O backend utilizará Node.js, TypeScript e Express em uma etapa futura. Suas responsabilidades previstas são:
 
 - expor operações por uma API REST;
 - validar dados recebidos;
@@ -49,7 +49,7 @@ O backend utiliza Node.js, TypeScript e Express. Suas responsabilidades prevista
 - acessar a persistência;
 - produzir respostas HTTP e erros consistentes.
 
-Organização inicial relevante:
+Organização futura sugerida, ainda não criada nesta etapa:
 
 ```text
 backend/src/
@@ -62,11 +62,11 @@ backend/src/
 └── server.ts
 ```
 
-Na Etapa 01, a API contém somente `GET /health`.
+Na Etapa 01, a API ainda não foi implementada e nenhum endpoint está disponível.
 
 ## Persistência
 
-O SQLite foi escolhido por não exigir um servidor separado e por facilitar execução local, testes, portabilidade e apresentação acadêmica. As tabelas conceituais são:
+O SQLite está previsto por não exigir um servidor separado e por facilitar execução local, testes, portabilidade e apresentação acadêmica. As tabelas conceituais serão:
 
 - `subjects` para disciplinas;
 - `categories` para categorias;
@@ -78,7 +78,7 @@ O banco físico e suas migrations serão criados em uma etapa posterior. Arquivo
 
 O frontend e o backend se comunicarão por HTTP, utilizando JSON. A API seguirá convenções REST compatíveis com as operações descritas na proposta. Endereços, formatos detalhados e códigos de resposta do CRUD serão definidos quando os casos de uso forem implementados.
 
-Contrato disponível nesta etapa:
+Contrato inicial previsto para uma etapa futura:
 
 ```http
 GET /health
@@ -101,7 +101,7 @@ GET /health
 | Repositórios | Isolar acesso aos dados | Definir respostas HTTP |
 | Banco SQLite | Armazenar dados consistentes | Controlar fluxo de interface |
 
-Essa separação é uma direção inicial. Pastas vazias indicam pontos de evolução e não abstrações já implementadas.
+Essa separação é uma direção conceitual. As pastas `frontend`, `backend` e `tests` permanecem vazias nesta etapa e não representam camadas já implementadas.
 
 ## Evolução da arquitetura
 

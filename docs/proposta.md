@@ -33,7 +33,7 @@ Permitir que estudantes cadastrem, organizem, acompanhem e consultem suas ativid
 11. Exibir atividades próximas do prazo.
 12. Exibir um resumo das atividades no Dashboard.
 
-As funcionalidades acima compõem o escopo funcional previsto para a evolução do projeto. A Etapa 01 não inclui a implementação completa dessas funcionalidades.
+As funcionalidades acima compõem o escopo funcional previsto para a evolução do projeto. A Etapa 01 não inclui qualquer implementação dessas funcionalidades.
 
 ## 6. Entidades e conceitos do domínio
 
@@ -235,7 +235,7 @@ Essa combinação atende à necessidade de uma aplicação Web incremental e man
 - **TypeScript:** compartilhamento de linguagem e conceitos de tipos entre cliente e servidor.
 - **Express:** definição simples de rotas e tratamento de requisições HTTP.
 
-A Etapa 01 disponibiliza apenas o endpoint de saúde `GET /health`. O CRUD será implementado em etapas posteriores.
+As tecnologias são apenas propostas nesta etapa. Nenhum servidor, endpoint ou CRUD foi implementado.
 
 ## 12. Persistência
 
@@ -284,7 +284,7 @@ atividade é considerada atrasada.
 
 ## 15. Escopo da Etapa 01
 
-Esta etapa define o problema, o público-alvo, o objetivo, o escopo funcional, os conceitos do domínio, as relações, as interfaces, as operações, as tecnologias e a arquitetura inicial. Também entrega scaffolds executáveis do frontend e do backend, incluindo `GET /health`, para estabelecer uma base técnica verificável.
+Esta etapa define o problema, o público-alvo, o objetivo, o escopo funcional, os conceitos do domínio, as relações, as interfaces, as operações, as tecnologias e a arquitetura inicial. O repositório contém somente documentação e pastas reservadas para o frontend, o backend e os testes, sem arquivos de implementação.
 
 Matriz de atendimento dos doze requisitos acadêmicos da proposta:
 
@@ -306,8 +306,8 @@ Matriz de atendimento dos doze requisitos acadêmicos da proposta:
 ## 16. Limitações atuais
 
 - o CRUD de atividades, disciplinas e categorias ainda não foi implementado;
-- o frontend apresenta somente a identificação do projeto e da etapa;
-- a API expõe somente o endpoint de saúde;
+- o frontend e o backend ainda não possuem implementação;
+- não existem endpoints ou dependências instaladas;
 - o modelo físico e as migrations SQLite ainda não existem;
 - filtros, pesquisa e cálculo de atrasos estão especificados, mas não implementados;
 - não há testes automatizados nesta etapa;
