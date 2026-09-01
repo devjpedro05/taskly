@@ -4,7 +4,7 @@ Sistema Web para organização e gerenciamento de atividades acadêmicas.
 
 ## Sobre o projeto
 
-O Taskly é um projeto acadêmico incremental da disciplina Tecnologia de Construção de Software I. A Etapa 01 estabelece o problema, o público-alvo, o escopo funcional e a arquitetura inicial da aplicação.
+O Taskly é um projeto acadêmico incremental da disciplina Tecnologia de Construção de Software I. A Etapa 01 definiu a proposta e o domínio; a Etapa 02 transforma essa base em um protótipo Web navegável com HTML semântico.
 
 ## Problema
 
@@ -14,45 +14,50 @@ Informações acadêmicas costumam ficar distribuídas entre anotações, mensag
 
 Permitir que estudantes cadastrem, organizem, acompanhem e consultem suas atividades acadêmicas de maneira centralizada.
 
-## Funcionalidades previstas
+## Interfaces representadas
 
-- cadastrar, editar e excluir atividades;
-- organizar atividades por disciplina e categoria;
-- definir prioridade e marcar atividades como concluídas;
-- pesquisar e filtrar atividades;
-- identificar atrasos e prazos próximos;
-- apresentar um resumo das atividades no Dashboard.
+- Dashboard com resumo e próximas atividades;
+- listagem de atividades com pesquisa e filtros visuais;
+- formulário estrutural para criar ou editar uma atividade;
+- listagem de disciplinas e suas quantidades demonstrativas.
 
-As funcionalidades são apenas especificadas nesta etapa. Não há implementação de frontend, backend ou banco de dados.
+A navegação entre páginas está funcional. Os dados são estáticos e as operações de salvar, excluir, pesquisar e filtrar ainda não possuem persistência ou regras reais.
 
-## Tecnologias propostas
+## Tecnologias
 
-### Frontend
+### Frontend implementado
 
 - React;
 - TypeScript;
-- Vite.
+- Vite;
+- React Router;
+- CSS convencional.
 
-### Backend
+### Backend e banco de dados
 
-- Node.js;
-- TypeScript;
-- Express.
-
-### Banco de dados
-
-- SQLite.
-
-A adoção dessas tecnologias está documentada para orientar as próximas etapas, sem arquivos de código ou dependências nesta entrega.
+Node.js, Express e SQLite permanecem previstos para etapas futuras. Não há API ou banco de dados funcional nesta entrega.
 
 ## Estrutura do projeto
 
 ```text
 taskly/
-├── backend/          # pasta reservada para implementação futura
-├── docs/             # proposta, arquitetura e evidências
-├── frontend/         # pasta reservada para implementação futura
-├── tests/            # pasta reservada para testes futuros
+├── backend/               # reservado para etapas futuras
+├── docs/
+│   ├── proposta.md
+│   ├── arquitetura.md
+│   ├── etapa-02.md
+│   └── evidencias.md
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── data/
+│   │   ├── pages/
+│   │   ├── styles/
+│   │   ├── types/
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   └── package.json
+├── tests/                 # reservado para testes futuros
 ├── .gitignore
 └── README.md
 ```
@@ -61,24 +66,39 @@ taskly/
 
 - [Proposta e especificação inicial](docs/proposta.md)
 - [Arquitetura inicial](docs/arquitetura.md)
+- [Etapa 02 — Protótipo estrutural](docs/etapa-02.md)
 - [Evidências](docs/evidencias.md)
 
 ## Execução
 
-Não há aplicação executável na Etapa 01. Comandos de instalação e execução serão documentados quando o frontend e o backend forem implementados.
+Pré-requisito: Node.js 20.19+ ou 22.12+.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+O Vite informará o endereço local no terminal. Para validar tipagem e gerar o build:
+
+```bash
+npm run typecheck
+npm run build
+```
 
 ## Status do projeto
 
-Proposta e especificação inicial concluídas. As pastas técnicas estão vazias e reservadas para evolução incremental.
+Protótipo estrutural do frontend concluído, com quatro interfaces navegáveis, dados mockados, HTML semântico e formulário com labels associados.
 
 ## Etapa atual
 
-Etapa 01 — Proposta e Especificação.
+Etapa 02 — Protótipo Estrutural com HTML Semântico.
 
 ## Roadmap
 
 - Etapa 01: proposta, especificação e arquitetura inicial;
-- próximas etapas: implementação incremental conforme os requisitos da disciplina.
+- Etapa 02: interfaces estruturais, navegação e HTML semântico;
+- próximas etapas: comportamento funcional, API, persistência e testes conforme os requisitos da disciplina.
 
 ## Licença
 

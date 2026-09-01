@@ -2,12 +2,13 @@
 
 ## Visão geral
 
-O Taskly prevê inicialmente uma arquitetura Web cliente-servidor simples. Quando implementada, a interface React será executada no navegador e consultará uma API REST Express. A API será responsável pelas regras da aplicação e pela persistência no SQLite.
+O Taskly prevê uma arquitetura Web cliente-servidor simples. Na Etapa 02, somente a interface React está implementada e utiliza dados locais de demonstração. A API REST Express e a persistência SQLite permanecem planejadas para etapas futuras.
 
 ```mermaid
 flowchart LR
-    A[Navegador<br/>React + TypeScript + Vite] -->|HTTP / JSON| B[API REST<br/>Node.js + Express + TypeScript]
-    B -->|SQL| C[(SQLite)]
+    A[Navegador<br/>React + TypeScript + Vite<br/>HTML semântico]
+    A -.->|Futuras etapas: HTTP / JSON| B[API REST<br/>Node.js + Express + TypeScript]
+    B -.->|Futuras etapas: SQL| C[(SQLite)]
 
     subgraph Dados conceituais
       C --- D[subjects]
@@ -18,22 +19,23 @@ flowchart LR
 
 ## Frontend
 
-O frontend utilizará React, TypeScript e Vite em uma etapa futura. Suas responsabilidades previstas são:
+O frontend utiliza React, TypeScript e Vite. Na Etapa 02, suas responsabilidades são:
 
 - apresentar as quatro interfaces definidas na proposta;
-- coletar e validar dados de entrada no nível de interface;
-- enviar requisições HTTP à API;
-- apresentar respostas, estados de carregamento e erros;
-- calcular apenas comportamentos estritamente visuais.
+- oferecer navegação por rotas no navegador;
+- representar o domínio com dados estáticos de demonstração;
+- estruturar formulários e conteúdos com HTML semântico;
+- adaptar a apresentação a diferentes larguras de tela.
 
-Organização futura sugerida, ainda não criada nesta etapa:
+Organização implementada nesta etapa:
 
 ```text
 frontend/src/
-├── components/   # componentes de interface reutilizáveis
-├── pages/        # composição das telas
-├── services/     # comunicação HTTP futura
-├── types/        # tipos do frontend
+├── components/   # layout e item de atividade reutilizável
+├── data/         # dados mockados
+├── pages/        # quatro interfaces
+├── styles/       # apresentação responsiva
+├── types/        # tipos do domínio
 ├── App.tsx
 └── main.tsx
 ```
@@ -101,7 +103,7 @@ GET /health
 | Repositórios | Isolar acesso aos dados | Definir respostas HTTP |
 | Banco SQLite | Armazenar dados consistentes | Controlar fluxo de interface |
 
-Essa separação é uma direção conceitual. As pastas `frontend`, `backend` e `tests` permanecem vazias nesta etapa e não representam camadas já implementadas.
+Essa separação continua como direção conceitual para o sistema completo. O `frontend` possui o protótipo estrutural da Etapa 02; `backend` e `tests` permanecem reservados, sem implementação.
 
 ## Evolução da arquitetura
 
