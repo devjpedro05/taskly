@@ -36,3 +36,9 @@ Nesta etapa, a proposta foi transformada em um frontend navegável com dados est
 - console do navegador sem erros ou avisos durante a validação.
 
 Persistência, API, filtros reais, exclusão e cadastro permanecem fora do escopo desta etapa.
+
+## Etapa 03 — Interface Responsiva com CSS
+
+Nesta etapa, as quatro interfaces foram auditadas em desktop, tablet e smartphone. O CSS foi refinado sem alterar rotas, semântica ou dados mockados.
+
+As nove capturas acadêmicas obrigatórias estão em [`docs/evidencias/etapa-03/`](evidencias/etapa-03/), com os nomes e dimensões definidos para a entrega. A relação completa entre viewports, interfaces e arquivos está documentada em [`docs/etapa-03.md`](etapa-03.md).

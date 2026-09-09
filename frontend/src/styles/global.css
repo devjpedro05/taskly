@@ -112,8 +112,14 @@ textarea:focus-visible {
   list-style: none;
 }
 
+.nav-list > li {
+  flex: 0 0 auto;
+}
+
 .nav-link {
   display: inline-flex;
+  min-height: 42px;
+  align-items: center;
   padding: 9px 11px;
   border-radius: 6px;
   color: #5d6d83;
@@ -141,6 +147,7 @@ textarea:focus-visible {
   font-size: 0.88rem;
   font-weight: 750;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -188,6 +195,7 @@ button:disabled {
 }
 
 .page-header > div {
+  min-width: 0;
   max-width: 720px;
 }
 
@@ -305,6 +313,12 @@ h3 {
   margin: 0;
   color: #718096;
   font-size: 0.82rem;
+}
+
+.section-header > *,
+.activity-header > *,
+.subject-item > * {
+  min-width: 0;
 }
 
 .activity-list {
@@ -598,6 +612,10 @@ dd {
     justify-self: end;
   }
 
+  .page-header {
+    gap: 24px;
+  }
+
   .filter-form {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -628,6 +646,8 @@ dd {
   .nav-list {
     overflow-x: auto;
     padding-bottom: 4px;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
   }
 
   .header-inner > .primary-link {
@@ -636,6 +656,18 @@ dd {
 
   .page {
     padding-block: 48px 64px;
+  }
+
+  .page-header {
+    gap: 24px;
+    padding-bottom: 36px;
+  }
+
+  .summary-section,
+  .content-section,
+  .filter-section,
+  .form-section {
+    padding-block: 24px 44px;
   }
 
   .page-header,
@@ -664,6 +696,11 @@ dd {
     border-left: 0;
   }
 
+  .summary-item {
+    min-height: 112px;
+    padding: 20px;
+  }
+
   .field-wide,
   .search-field {
     grid-column: auto;
@@ -671,6 +708,35 @@ dd {
 
   .activity-form {
     padding: 22px;
+  }
+
+  .field input,
+  .field select {
+    min-height: 46px;
+  }
+
+  .activity-metadata,
+  .subject-item dl {
+    gap: 16px 24px;
+  }
+
+  .activity-actions {
+    gap: 12px;
+  }
+
+  .activity-actions .text-link,
+  .activity-actions .text-button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions > * {
+    width: 100%;
   }
 
   .subject-item dl {

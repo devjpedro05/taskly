@@ -4,7 +4,7 @@ Sistema Web para organização e gerenciamento de atividades acadêmicas.
 
 ## Sobre o projeto
 
-O Taskly é um projeto acadêmico incremental da disciplina Tecnologia de Construção de Software I. A Etapa 01 definiu a proposta e o domínio; a Etapa 02 transforma essa base em um protótipo Web navegável com HTML semântico.
+O Taskly é um projeto acadêmico incremental da disciplina Tecnologia de Construção de Software I. A Etapa 01 definiu a proposta e o domínio; a Etapa 02 transformou essa base em um protótipo Web navegável com HTML semântico; e a Etapa 03 comprovou sua adaptação responsiva em desktop, tablet e smartphone.
 
 ## Problema
 
@@ -46,6 +46,9 @@ taskly/
 │   ├── proposta.md
 │   ├── arquitetura.md
 │   ├── etapa-02.md
+│   ├── etapa-03.md
+│   ├── evidencias/
+│   │   └── etapa-03/       # nove capturas responsivas
 │   └── evidencias.md
 ├── frontend/
 │   ├── src/
@@ -67,6 +70,7 @@ taskly/
 - [Proposta e especificação inicial](docs/proposta.md)
 - [Arquitetura inicial](docs/arquitetura.md)
 - [Etapa 02 — Protótipo estrutural](docs/etapa-02.md)
+- [Etapa 03 — Interface responsiva](docs/etapa-03.md)
 - [Evidências](docs/evidencias.md)
 
 ## Execução
@@ -88,16 +92,17 @@ npm run build
 
 ## Status do projeto
 
-Protótipo estrutural do frontend concluído, com quatro interfaces navegáveis, dados mockados, HTML semântico e formulário com labels associados.
+Frontend responsivo concluído e validado nas quatro interfaces. As nove capturas acadêmicas representativas estão disponíveis em `docs/evidencias/etapa-03/`.
 
 ## Etapa atual
 
-Etapa 02 — Protótipo Estrutural com HTML Semântico.
+Etapa 03 — Interface Responsiva com CSS.
 
 ## Roadmap
 
 - Etapa 01: proposta, especificação e arquitetura inicial;
 - Etapa 02: interfaces estruturais, navegação e HTML semântico;
+- Etapa 03: CSS responsivo comprovado em desktop, tablet e smartphone;
 - próximas etapas: comportamento funcional, API, persistência e testes conforme os requisitos da disciplina.
 
 ## Licença
