@@ -325,6 +325,24 @@ h3 {
   border-bottom: 1px solid #d5dee9;
 }
 
+.empty-state {
+  padding: 40px 16px;
+  border-top: 1px solid #d5dee9;
+  text-align: center;
+}
+
+.empty-state h3 {
+  margin: 0;
+  color: #31445f;
+  font-size: 1rem;
+}
+
+.empty-state p {
+  margin: 6px 0 0;
+  color: #718096;
+  font-size: 0.86rem;
+}
+
 .activity-item {
   padding-block: 28px;
   border-top: 1px solid #d5dee9;
@@ -475,6 +493,19 @@ dd {
   border-color: #97abc2;
 }
 
+.field input[aria-invalid="true"],
+.field select[aria-invalid="true"] {
+  border-color: #c2413b;
+  background: #fffafa;
+}
+
+.field-error {
+  margin: 0;
+  color: #a9322d;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
 .form-page {
   max-width: 900px;
 }
@@ -524,6 +555,23 @@ dd {
   padding: 12px 14px;
   border-left: 3px solid #8daef8;
   background: #f4f7ff;
+}
+
+.form-success {
+  margin-top: 16px;
+  padding: 13px 15px;
+  border-left: 3px solid #3f8c69;
+  color: #285c47;
+  background: #eef8f3;
+  font-size: 0.84rem;
+}
+
+.form-success p {
+  margin: 0;
+}
+
+.form-success p + p {
+  margin-top: 4px;
 }
 
 .form-actions {

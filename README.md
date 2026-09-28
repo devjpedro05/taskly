@@ -4,7 +4,7 @@ Sistema Web para organização e gerenciamento de atividades acadêmicas.
 
 ## Sobre o projeto
 
-O Taskly é um projeto acadêmico incremental da disciplina Tecnologia de Construção de Software I. A Etapa 01 definiu a proposta e o domínio; a Etapa 02 transformou essa base em um protótipo Web navegável com HTML semântico; e a Etapa 03 comprovou sua adaptação responsiva em desktop, tablet e smartphone.
+O Taskly é um projeto acadêmico incremental da disciplina Tecnologia de Construção de Software I. A Etapa 01 definiu a proposta e o domínio; a Etapa 02 transformou essa base em um protótipo Web navegável com HTML semântico; a Etapa 03 comprovou sua adaptação responsiva; e a Etapa 04 adicionou interatividade básica com React e TypeScript.
 
 ## Problema
 
@@ -17,11 +17,11 @@ Permitir que estudantes cadastrem, organizem, acompanhem e consultem suas ativid
 ## Interfaces representadas
 
 - Dashboard com resumo e próximas atividades;
-- listagem de atividades com pesquisa e filtros visuais;
-- formulário estrutural para criar ou editar uma atividade;
+- listagem de atividades com pesquisa e filtros funcionais;
+- formulário para criar ou editar uma atividade com validação dos campos obrigatórios;
 - listagem de disciplinas e suas quantidades demonstrativas.
 
-A navegação entre páginas está funcional. Os dados são estáticos e as operações de salvar, excluir, pesquisar e filtrar ainda não possuem persistência ou regras reais.
+A navegação, a pesquisa, os filtros combináveis e a validação do formulário estão funcionais. Os dados continuam estáticos: o formulário não persiste informações, e as operações de salvar e excluir permanecem fora do escopo desta etapa.
 
 ## Tecnologias
 
@@ -47,8 +47,10 @@ taskly/
 │   ├── arquitetura.md
 │   ├── etapa-02.md
 │   ├── etapa-03.md
+│   ├── etapa-04.md
 │   ├── evidencias/
-│   │   └── etapa-03/       # nove capturas responsivas
+│   │   ├── etapa-03/       # nove capturas responsivas
+│   │   └── etapa-04/       # cinco capturas de interatividade
 │   └── evidencias.md
 ├── frontend/
 │   ├── src/
@@ -71,6 +73,7 @@ taskly/
 - [Arquitetura inicial](docs/arquitetura.md)
 - [Etapa 02 — Protótipo estrutural](docs/etapa-02.md)
 - [Etapa 03 — Interface responsiva](docs/etapa-03.md)
+- [Etapa 04 — Interatividade com JavaScript](docs/etapa-04.md)
 - [Evidências](docs/evidencias.md)
 
 ## Execução
@@ -92,18 +95,19 @@ npm run build
 
 ## Status do projeto
 
-Frontend responsivo concluído e validado nas quatro interfaces. As nove capturas acadêmicas representativas estão disponíveis em `docs/evidencias/etapa-03/`.
+Frontend responsivo com pesquisa, filtros e validação manual do formulário. As evidências da Etapa 04 estão disponíveis em `docs/evidencias/etapa-04/`.
 
 ## Etapa atual
 
-Etapa 03 — Interface Responsiva com CSS.
+Etapa 04 — Interatividade com JavaScript.
 
 ## Roadmap
 
 - Etapa 01: proposta, especificação e arquitetura inicial;
 - Etapa 02: interfaces estruturais, navegação e HTML semântico;
 - Etapa 03: CSS responsivo comprovado em desktop, tablet e smartphone;
-- próximas etapas: comportamento funcional, API, persistência e testes conforme os requisitos da disciplina.
+- Etapa 04: pesquisa, filtros e validação manual de formulário;
+- próximas etapas: API, persistência e testes conforme os requisitos da disciplina.
 
 ## Licença
 

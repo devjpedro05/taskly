@@ -42,3 +42,17 @@ Persistência, API, filtros reais, exclusão e cadastro permanecem fora do escop
 Nesta etapa, as quatro interfaces foram auditadas em desktop, tablet e smartphone. O CSS foi refinado sem alterar rotas, semântica ou dados mockados.
 
 As nove capturas acadêmicas obrigatórias estão em [`docs/evidencias/etapa-03/`](evidencias/etapa-03/), com os nomes e dimensões definidos para a entrega. A relação completa entre viewports, interfaces e arquivos está documentada em [`docs/etapa-03.md`](etapa-03.md).
+
+## Etapa 04 — Interatividade com JavaScript
+
+Nesta etapa, pesquisa e filtros passaram a atualizar dinamicamente a listagem, e o formulário de atividade recebeu validação manual sem persistência.
+
+As cinco capturas reais estão em [`docs/evidencias/etapa-04/`](evidencias/etapa-04/):
+
+- `01-pesquisa.png`: pesquisa por título com lista e contador atualizados;
+- `02-filtros.png`: filtros combinados de status e prioridade;
+- `03-sem-resultados.png`: tratamento da pesquisa sem correspondência;
+- `04-formulario-invalido.png`: mensagens dos quatro campos obrigatórios;
+- `05-formulario-valido.png`: confirmação de validação e aviso de ausência de persistência.
+
+O detalhamento dos eventos, estados, funções, validações e evidências está em [`docs/etapa-04.md`](etapa-04.md).
