@@ -1,0 +1,37 @@
+{
+  "activities": [
+    {
+      "id": 1,
+      "title": "Trabalho API REST",
+      "description": "Documentar os recursos e contratos previstos para a API do projeto.",
+      "subject": "Tecnologia de Construção de Software I",
+      "category": "Trabalho",
+      "dueDate": "2026-09-05",
+      "dueDateLabel": "05/09/2026",
+      "priority": "HIGH",
+      "status": "PENDING"
+    },
+    {
+      "id": 2,
+      "title": "Lista de exercícios SQL",
+      "description": "Resolver a lista de consultas, junções e agrupamentos.",
+      "subject": "Banco de Dados",
+      "category": "Exercício",
+      "dueDate": "2026-09-08",
+      "dueDateLabel": "08/09/2026",
+      "priority": "MEDIUM",
+      "status": "PENDING"
+    },
+    {
+      "id": 3,
+      "title": "Projeto da disciplina",
+      "description": "Preparar a apresentação da primeira versão estrutural do projeto.",
+      "subject": "Algoritmos",
+      "category": "Projeto",
+      "dueDate": "2026-09-12",
+      "dueDateLabel": "12/09/2026",
+      "priority": "LOW",
+      "status": "COMPLETED"
+    }
+  ]
+}

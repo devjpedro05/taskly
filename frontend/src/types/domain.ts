@@ -20,3 +20,14 @@ export interface Subject {
   activityCount: number;
   pendingCount: number;
 }
+
+export interface NewActivity {
+  title: string;
+  description: string;
+  subject: string;
+  category: string;
+  dueDate: string;
+  dueDateLabel: string;
+  priority: ActivityPriority;
+  status: ActivityStatus;
+}

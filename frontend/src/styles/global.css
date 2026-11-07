@@ -325,6 +325,27 @@ h3 {
   border-bottom: 1px solid #d5dee9;
 }
 
+.communication-state {
+  margin: 0;
+  padding: 28px 0;
+  border-top: 1px solid #d5dee9;
+  color: #617087;
+}
+
+.communication-error,
+.form-error {
+  color: #a9322d;
+}
+
+.communication-error p {
+  margin: 0 0 16px;
+}
+
+.form-error {
+  margin: 16px 0 0;
+  font-size: 0.88rem;
+}
+
 .empty-state {
   padding: 40px 16px;
   border-top: 1px solid #d5dee9;
@@ -439,6 +460,7 @@ dd {
 }
 
 .filter-form {
+
   display: grid;
   grid-template-columns: minmax(210px, 1.7fr) repeat(4, minmax(130px, 1fr)) auto;
   gap: 14px;

@@ -1,6 +1,8 @@
 import { type FormEvent, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { activities, subjects } from "../data/mockData";
+import { createActivity } from "../services/activityService";
+import type { ActivityPriority, ActivityStatus, NewActivity } from "../types/domain";
 
 interface FormErrors {
   title?: string;
@@ -35,26 +37,62 @@ function validateForm(formData: FormData) {
   return validationErrors;
 }
 
+function formatDueDate(date: string): string {
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year}`;
+}
+
 export function ActivityFormPage() {
   const { activityId } = useParams();
   const activity = activities.find((item) => item.id === Number(activityId));
-  const isEditing = Boolean(activity);
+  const isEditing = Boolean(activityId);
   const [errors, setErrors] = useState<FormErrors>({});
   const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (isSubmitting) return;
+
+    setSubmitError("");
+    setSuccessMessage("");
     const formData = new FormData(event.currentTarget);
     const validationErrors = validateForm(formData);
 
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
-      setSuccessMessage("");
       return;
     }
 
-    setSuccessMessage("Formulário validado com sucesso.");
+    if (isEditing) {
+      setSuccessMessage("Formulário validado com sucesso. A edição permanece demonstrativa.");
+      return;
+    }
+
+    const dueDate = String(formData.get("dueDate") ?? "");
+    const newActivity: NewActivity = {
+      title: String(formData.get("title") ?? "").trim(),
+      description: String(formData.get("description") ?? "").trim(),
+      subject: String(formData.get("subject") ?? ""),
+      category: String(formData.get("category") ?? ""),
+      dueDate,
+      dueDateLabel: formatDueDate(dueDate),
+      priority: String(formData.get("priority")) as ActivityPriority,
+      status: String(formData.get("status")) as ActivityStatus,
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      await createActivity(newActivity);
+      setSuccessMessage("Atividade enviada com sucesso.");
+    } catch {
+      setSubmitError("Não foi possível enviar a atividade.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -203,15 +241,22 @@ export function ActivityFormPage() {
           </fieldset>
 
           <p className="prototype-note" id="form-note">
-            Nesta etapa, o formulário valida os campos obrigatórios, mas não salva os dados.
+            {isEditing
+              ? "Edição demonstrativa: os dados locais são usados para pré-preenchimento. Alterações não são enviadas ao serviço."
+              : "O cadastro envia os dados ao serviço simulado local."}
+            {isEditing && !activity && " Esta atividade não possui dados locais para pré-preenchimento."}
           </p>
+
+          {submitError && (
+            <p className="form-error" role="alert">{submitError}</p>
+          )}
 
           {successMessage && (
             <div className="form-success" role="status">
               <p>
                 <strong>{successMessage}</strong>
               </p>
-              <p>Os dados não são persistidos nesta etapa.</p>
+              {!isEditing && <p>Os dados foram registrados no serviço simulado local.</p>}
             </div>
           )}
 
@@ -219,8 +264,8 @@ export function ActivityFormPage() {
             <Link className="secondary-link" to="/atividades">
               Cancelar
             </Link>
-            <button className="primary-button" type="submit">
-              Salvar atividade
+            <button className="primary-button" type="submit" disabled={isSubmitting || (isEditing && !activity)}>
+              {isSubmitting ? "Enviando..." : isEditing ? "Validar edição" : "Salvar atividade"}
             </button>
           </footer>
         </form>

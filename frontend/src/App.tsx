@@ -11,8 +11,8 @@ export function App() {
       <Route element={<AppLayout />}>
         <Route index element={<DashboardPage />} />
         <Route path="atividades" element={<ActivitiesPage />} />
-        <Route path="atividades/nova" element={<ActivityFormPage />} />
-        <Route path="atividades/:activityId/editar" element={<ActivityFormPage />} />
+        <Route path="atividades/nova" element={<ActivityFormPage key="new" />} />
+        <Route path="atividades/:activityId/editar" element={<ActivityFormPage key="edit" />} />
         <Route path="disciplinas" element={<SubjectsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>

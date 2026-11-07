@@ -1,18 +1,41 @@
-import { type ChangeEvent, type FormEvent, useState } from "react";
+import { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ActivityCard } from "../components/ActivityCard";
-import { activities, subjects } from "../data/mockData";
+import { subjects } from "../data/mockData";
+import { getActivities } from "../services/activityService";
+import type { Activity } from "../types/domain";
 
 function getItemsLabel(count: number) {
   return `${count} ${count === 1 ? "item" : "itens"}`;
 }
 
 export function ActivitiesPage() {
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [subjectFilter, setSubjectFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
+
+  useEffect(() => {
+    loadActivities();
+  }, []);
+
+  async function loadActivities() {
+    setIsLoading(true);
+    setLoadError("");
+
+    try {
+      const loadedActivities = await getActivities();
+      setActivities(loadedActivities);
+    } catch {
+      setLoadError("Não foi possível carregar as atividades.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const normalizedSearch = searchTerm.trim().toLowerCase();
   const filteredActivities = activities.filter((activity) => {
@@ -156,14 +179,25 @@ export function ActivitiesPage() {
       <section className="content-section" aria-labelledby="activities-title">
         <header className="section-header">
           <div>
-            <p className="eyebrow">Dados demonstrativos</p>
+            <p className="eyebrow">Serviço simulado</p>
             <h2 id="activities-title">Lista de atividades</h2>
           </div>
-          <span aria-live="polite">{getItemsLabel(filteredActivities.length)}</span>
+          {!isLoading && !loadError && (
+            <span aria-live="polite">{getItemsLabel(filteredActivities.length)}</span>
+          )}
         </header>
 
         <div className="activity-list">
-          {filteredActivities.length === 0 ? (
+          {isLoading ? (
+            <p className="communication-state" role="status">Carregando atividades...</p>
+          ) : loadError ? (
+            <div className="communication-state communication-error" role="alert">
+              <p>{loadError}</p>
+              <button className="secondary-button" type="button" onClick={loadActivities}>
+                Tentar novamente
+              </button>
+            </div>
+          ) : filteredActivities.length === 0 ? (
             <div className="empty-state" role="status">
               <h3>Nenhuma atividade encontrada.</h3>
               <p>Tente alterar a pesquisa ou os filtros aplicados.</p>
