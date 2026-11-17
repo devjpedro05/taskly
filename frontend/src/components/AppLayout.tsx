@@ -45,7 +45,7 @@ export function AppLayout() {
 
       <footer className="site-footer">
         <p>Taskly · Projeto acadêmico incremental</p>
-        <p>Etapa 05 · Modularização e Comunicação Assíncrona</p>
+        <p>Etapa 06 · API REST da Aplicação</p>
       </footer>
     </div>
   );

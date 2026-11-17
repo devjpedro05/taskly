@@ -1,0 +1,107 @@
+{
+  "info": {
+    "name": "Taskly — Etapa 06",
+    "description": "API REST local de atividades. Inicie o Express e envie as requisições na ordem indicada. O cadastro guarda o ID para que PATCH e DELETE operem apenas sobre a atividade recém-criada. Erros retornam JSON no formato {\"error\":\"Descrição do erro.\"}.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001",
+      "type": "string"
+    },
+    {
+      "key": "createdId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Listar atividades",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/activities",
+        "description": "200 OK: array JSON. Em uma instância nova, contém três atividades. Uma coleção vazia retorna []."
+      }
+    },
+    {
+      "name": "02 Consultar atividade inicial",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/activities/1",
+        "description": "200 OK: objeto de ID 1. Um ID como abc retorna 400; um ID válido que não existe retorna 404."
+      }
+    },
+    {
+      "name": "03 Criar atividade",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Atividade criada (201)', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) {",
+              "  pm.collectionVariables.set('createdId', pm.response.json().id);",
+              "} else {",
+              "  pm.collectionVariables.unset('createdId');",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/activities",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Revisar API REST\",\n  \"description\": \"\",\n  \"subject\": \"Tecnologia de Construção de Software I\",\n  \"category\": \"Exercício\",\n  \"dueDate\": \"2026-11-30\",\n  \"dueDateLabel\": \"30/11/2026\",\n  \"priority\": \"MEDIUM\",\n  \"status\": \"PENDING\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "201 Created: atividade com ID gerado e cabeçalho Location. Campos inválidos ou JSON malformado retornam 400."
+      }
+    },
+    {
+      "name": "04 Alterar atividade criada",
+      "request": {
+        "method": "PATCH",
+        "url": "{{baseUrl}}/activities/{{createdId}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"COMPLETED\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Execute 03 antes. 200 OK: atividade completa com status atualizado. Corpo vazio, ID no corpo e campos desconhecidos retornam 400; atividade inexistente retorna 404."
+      }
+    },
+    {
+      "name": "05 Excluir atividade criada",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/activities/{{createdId}}",
+        "description": "Execute 03 antes. 204 No Content: resposta sem corpo. ID inválido retorna 400; repetir a exclusão retorna 404."
+      }
+    }
+  ]
+}

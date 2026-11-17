@@ -243,7 +243,7 @@ export function ActivityFormPage() {
           <p className="prototype-note" id="form-note">
             {isEditing
               ? "Edição demonstrativa: os dados locais são usados para pré-preenchimento. Alterações não são enviadas ao serviço."
-              : "O cadastro envia os dados ao serviço simulado local."}
+              : "O cadastro envia os dados à API Taskly."}
             {isEditing && !activity && " Esta atividade não possui dados locais para pré-preenchimento."}
           </p>
 
@@ -256,7 +256,7 @@ export function ActivityFormPage() {
               <p>
                 <strong>{successMessage}</strong>
               </p>
-              {!isEditing && <p>Os dados foram registrados no serviço simulado local.</p>}
+              {!isEditing && <p>A atividade fica disponível até o servidor ser reiniciado.</p>}
             </div>
           )}
 

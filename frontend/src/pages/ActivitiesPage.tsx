@@ -179,7 +179,7 @@ export function ActivitiesPage() {
       <section className="content-section" aria-labelledby="activities-title">
         <header className="section-header">
           <div>
-            <p className="eyebrow">Serviço simulado</p>
+            <p className="eyebrow">API Taskly</p>
             <h2 id="activities-title">Lista de atividades</h2>
           </div>
           {!isLoading && !loadError && (
