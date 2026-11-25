@@ -1,0 +1,867 @@
+{
+  "info": {
+    "name": "Taskly — Etapa 07",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "SQLite e autenticação por cookie. Configure email único e password (8+ caracteres e até 72 bytes) antes de executar. Inicie a API com FRONTEND_ORIGIN igual à variável frontendOrigin. Execute os grupos na ordem. Postman mantém o cookie HttpOnly. Logout está ao final de Subtasks. Cada DELETE usa somente um registro criado por esta coleção; a atividade principal permanece para demonstrar persistência."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001",
+      "type": "string"
+    },
+    {
+      "key": "frontendOrigin",
+      "value": "http://localhost:5173",
+      "type": "string"
+    },
+    {
+      "key": "email",
+      "value": "seu-email@example.com",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "subjectId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "categoryId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "activityId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "subtaskId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "temporarySubjectId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "temporaryCategoryId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "temporaryActivityId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Cadastrar estudante",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/register",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 201. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"name\": \"Estudante Taskly\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/login",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sessão atual",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/me",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Subjects",
+      "item": [
+        {
+          "name": "Criar",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subjects",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 201. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"name\": \"Banco de Dados\",\n  \"professor\": \"Professor exemplo\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"subjectId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar lista",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subjects",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Atualizar",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/subjects/{{subjectId}}",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"name\": \"Banco de Dados atualizado\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Criar descartável",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subjects",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 201. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"name\": \"Registro descartável\",\n  \"professor\": \"Professor exemplo\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"temporarySubjectId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Excluir descartável",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/subjects/{{temporarySubjectId}}",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 204. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Criar",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/categories",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 201. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"name\": \"Trabalho acadêmico\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"categoryId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar lista",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Atualizar",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/categories/{{categoryId}}",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"name\": \"Trabalho acadêmico atualizado\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Criar descartável",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/categories",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 201. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"name\": \"Registro descartável\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"temporaryCategoryId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Excluir descartável",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/categories/{{temporaryCategoryId}}",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 204. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Activities",
+      "item": [
+        {
+          "name": "Criar atividade",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/activities",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 201. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"title\": \"Projeto SQLite\",\n  \"description\": \"Testar persistência\",\n  \"subjectId\": {{subjectId}},\n  \"categoryId\": {{categoryId}},\n  \"dueDate\": \"2026-12-10\",\n  \"priority\": \"HIGH\",\n  \"status\": \"PENDING\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"activityId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar atividades",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/activities",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar individual",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/activities/{{activityId}}",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Alterar atividade",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/activities/{{activityId}}",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"title\": \"Projeto persistente\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Criar descartável",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/activities",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 201. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"title\": \"Atividade descartável\",\n  \"description\": \"Testar persistência\",\n  \"subjectId\": {{subjectId}},\n  \"categoryId\": {{categoryId}},\n  \"dueDate\": \"2026-12-10\",\n  \"priority\": \"HIGH\",\n  \"status\": \"PENDING\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"temporaryActivityId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Excluir descartável",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/activities/{{temporaryActivityId}}",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 204. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Subtasks",
+      "item": [
+        {
+          "name": "Criar subtarefa",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/activities/{{activityId}}/subtasks",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 201. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"title\": \"Criar modelo ER\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"subtaskId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar subtarefas",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/activities/{{activityId}}/subtasks",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Concluir subtarefa",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/activities/{{activityId}}/subtasks/{{subtaskId}}",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "HTTP 200. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman.",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"completed\": true\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Excluir subtarefa",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/activities/{{activityId}}/subtasks/{{subtaskId}}",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 204. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/logout",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "{{frontendOrigin}}"
+              }
+            ],
+            "description": "HTTP 204. Erros: 400 dados inválidos; 401 sem sessão; 403 origem; 404 registro inacessível; 409 integridade; 500 persistência. O cookie de login é mantido pelo Postman."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

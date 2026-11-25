@@ -1,18 +1,10 @@
 export type ActivityStatus = "PENDING" | "COMPLETED";
 export type ActivityPriority = "LOW" | "MEDIUM" | "HIGH";
-
-export interface Activity {
+export interface User {
   id: number;
-  title: string;
-  description: string;
-  subject: string;
-  category: string;
-  dueDate: string;
-  dueDateLabel: string;
-  priority: ActivityPriority;
-  status: ActivityStatus;
+  name: string;
+  email: string;
 }
-
 export interface Subject {
   id: number;
   name: string;
@@ -20,14 +12,27 @@ export interface Subject {
   activityCount: number;
   pendingCount: number;
 }
-
+export interface Category {
+  id: number;
+  name: string;
+}
 export interface NewActivity {
   title: string;
   description: string;
-  subject: string;
-  category: string;
+  subjectId: number;
+  categoryId: number;
   dueDate: string;
-  dueDateLabel: string;
   priority: ActivityPriority;
   status: ActivityStatus;
+}
+export interface Activity extends NewActivity {
+  id: number;
+  subject: string;
+  category: string;
+  dueDateLabel: string;
+}
+export interface Subtask {
+  id: number;
+  title: string;
+  completed: boolean;
 }

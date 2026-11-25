@@ -1,9 +1,10 @@
 import { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ActivityCard } from "../components/ActivityCard";
-import { subjects } from "../data/mockData";
+import { getSubjects } from "../services/subjectService";
+import { getCategories } from "../services/categoryService";
 import { getActivities } from "../services/activityService";
-import type { Activity } from "../types/domain";
+import type { Activity, Subject, Category } from "../types/domain";
 
 function getItemsLabel(count: number) {
   return `${count} ${count === 1 ? "item" : "itens"}`;
@@ -11,6 +12,8 @@ function getItemsLabel(count: number) {
 
 export function ActivitiesPage() {
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,8 +31,11 @@ export function ActivitiesPage() {
     setLoadError("");
 
     try {
-      const loadedActivities = await getActivities();
+      const [loadedActivities, loadedSubjects, loadedCategories] =
+        await Promise.all([getActivities(), getSubjects(), getCategories()]);
       setActivities(loadedActivities);
+      setSubjects(loadedSubjects);
+      setCategories(loadedCategories);
     } catch {
       setLoadError("Não foi possível carregar as atividades.");
     } finally {
@@ -39,11 +45,18 @@ export function ActivitiesPage() {
 
   const normalizedSearch = searchTerm.trim().toLowerCase();
   const filteredActivities = activities.filter((activity) => {
-    const matchesSearch = activity.title.toLowerCase().includes(normalizedSearch);
-    const matchesStatus = statusFilter === "all" || activity.status === statusFilter;
-    const matchesSubject = subjectFilter === "all" || activity.subject === subjectFilter;
-    const matchesCategory = categoryFilter === "all" || activity.category === categoryFilter;
-    const matchesPriority = priorityFilter === "all" || activity.priority === priorityFilter;
+    const matchesSearch = activity.title
+      .toLowerCase()
+      .includes(normalizedSearch);
+    const matchesStatus =
+      statusFilter === "all" || activity.status === statusFilter;
+    const matchesSubject =
+      subjectFilter === "all" || activity.subjectId === Number(subjectFilter);
+    const matchesCategory =
+      categoryFilter === "all" ||
+      activity.categoryId === Number(categoryFilter);
+    const matchesPriority =
+      priorityFilter === "all" || activity.priority === priorityFilter;
 
     return (
       matchesSearch &&
@@ -76,7 +89,9 @@ export function ActivitiesPage() {
         <div>
           <p className="eyebrow">Organização acadêmica</p>
           <h1>Atividades</h1>
-          <p>Consulte, pesquise e filtre as atividades acadêmicas cadastradas.</p>
+          <p>
+            Consulte, pesquise e filtre as atividades acadêmicas cadastradas.
+          </p>
         </div>
         <Link className="primary-link" to="/atividades/nova">
           Nova atividade
@@ -87,11 +102,17 @@ export function ActivitiesPage() {
         <header className="section-header compact">
           <div>
             <h2 id="filters-title">Pesquisa e filtros</h2>
-            <p>Os resultados são atualizados conforme os controles são alterados.</p>
+            <p>
+              Os resultados são atualizados conforme os controles são alterados.
+            </p>
           </div>
         </header>
 
-        <form className="filter-form" role="search" onSubmit={handleFilterSubmit}>
+        <form
+          className="filter-form"
+          role="search"
+          onSubmit={handleFilterSubmit}
+        >
           <div className="field search-field">
             <label htmlFor="activity-search">Buscar atividade</label>
             <input
@@ -128,7 +149,7 @@ export function ActivitiesPage() {
             >
               <option value="all">Todas</option>
               {subjects.map((subject) => (
-                <option value={subject.name} key={subject.id}>
+                <option value={subject.id} key={subject.id}>
                   {subject.name}
                 </option>
               ))}
@@ -144,10 +165,11 @@ export function ActivitiesPage() {
               onChange={(event) => setCategoryFilter(event.target.value)}
             >
               <option value="all">Todas</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Exercício">Exercício</option>
-              <option value="Projeto">Projeto</option>
-              <option value="Prova">Prova</option>
+              {categories.map((category) => (
+                <option value={category.id} key={category.id}>
+                  {category.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -183,17 +205,28 @@ export function ActivitiesPage() {
             <h2 id="activities-title">Lista de atividades</h2>
           </div>
           {!isLoading && !loadError && (
-            <span aria-live="polite">{getItemsLabel(filteredActivities.length)}</span>
+            <span aria-live="polite">
+              {getItemsLabel(filteredActivities.length)}
+            </span>
           )}
         </header>
 
         <div className="activity-list">
           {isLoading ? (
-            <p className="communication-state" role="status">Carregando atividades...</p>
+            <p className="communication-state" role="status">
+              Carregando atividades...
+            </p>
           ) : loadError ? (
-            <div className="communication-state communication-error" role="alert">
+            <div
+              className="communication-state communication-error"
+              role="alert"
+            >
               <p>{loadError}</p>
-              <button className="secondary-button" type="button" onClick={loadActivities}>
+              <button
+                className="secondary-button"
+                type="button"
+                onClick={loadActivities}
+              >
                 Tentar novamente
               </button>
             </div>

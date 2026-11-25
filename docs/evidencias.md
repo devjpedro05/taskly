@@ -1,5 +1,39 @@
 # Evidências
 
+## Etapa 07 — Persistência e CRUD com Banco de Dados
+
+O script `tests/stage07.cjs` executou **82 requisições HTTP reais** contra um banco SQLite temporário, além dos testes de interface no Chrome. O banco de uso normal não recebeu usuários nem dados de teste.
+
+Foram verificados: cinco tabelas principais, foreign_keys, hashes bcrypt, cadastro/login/logout, e-mail normalizado/duplicado, sessão por cookie HttpOnly, CSRF por Origin, CRUD de atividades/disciplinas/categorias/subtarefas, restrição e cascata, isolamento entre dois estudantes e erro controlado com o banco bloqueado.
+
+A persistência foi comprovada na sequência **cadastrar → consultar → encerrar backend → reiniciar → consultar os mesmos IDs**. Atividade, subtarefa concluída, disciplina, categoria e usuário permaneceram no arquivo SQLite. A mesma sequência foi repetida pela interface.
+
+### Capturas reais
+
+| Arquivo em `docs/evidencias/etapa-07/` | O que comprova |
+| --- | --- |
+| 01-cadastro.png | Formulário para criar o usuário, sem exibir senhas. |
+| 02-login.png | Login e confirmação de cadastro concluído. |
+| 03-dashboard.png | Dashboard com sessão e atividades reais. |
+| 04-disciplinas.png | Disciplina gravada e consultada pelo usuário. |
+| 05-categorias.png | Categorias iniciais e nova categoria persistida. |
+| 06-atividades.png | Atividade real após edição pela API. |
+| 07-detalhes-subtarefas.png | Detalhes relacionados e subtarefa concluída. |
+| 09-persistencia-reinicio.png | Mesmo registro e subtarefa após reiniciar o backend. |
+
+Não foi gerada a captura 08 no Postman: o aplicativo não estava instalado. Em substituição à demonstração gráfica, todas as requisições e scripts de IDs da coleção foram executados por HTTP, na ordem dos cinco grupos. Não foi simulada uma imagem do Postman.
+
+### Validação técnica
+
+- Backend: instalação, typecheck, build e npm audit aprovados, sem vulnerabilidades.
+- Frontend: instalação, typecheck e build aprovados; auditoria da instalação sem vulnerabilidades.
+- Node.js 24.3.0, better-sqlite3 compatível e criação automática do banco confirmados.
+- Chrome: cadastro, erro de login, login, logout, proteção de rotas, CRUD real, validação e mensagens.
+- Responsividade verificada em 1440×1000, 768×1024 e 390×844. Ajustado o mínimo de largura da navegação para os novos links.
+- Testes usam um banco temporário próprio e o removem ao terminar. As imagens são capturas reais, sem composição ou alteração para simular estados.
+
+As etapas anteriores abaixo foram preservadas como histórico.
+
 ## Etapa 01
 
 Nesta etapa, a entrega é composta pela proposta e especificação inicial do projeto.

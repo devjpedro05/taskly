@@ -1,29 +1,27 @@
+import { api } from "./api";
 import type { Activity, NewActivity } from "../types/domain";
-
-const API_URL = "http://localhost:3001";
-
 export async function getActivities(): Promise<Activity[]> {
-  const response = await fetch(`${API_URL}/activities`);
-
-  if (!response.ok) {
-    throw new Error("Não foi possível carregar as atividades.");
-  }
-
-  return response.json();
+  return (await api("/activities")).json();
 }
-
-export async function createActivity(activity: NewActivity): Promise<Activity> {
-  const response = await fetch(`${API_URL}/activities`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(activity),
-  });
-
-  if (!response.ok) {
-    throw new Error("Não foi possível enviar a atividade.");
-  }
-
-  return response.json();
+export async function getActivity(id: number): Promise<Activity> {
+  return (await api("/activities/" + id)).json();
+}
+export async function createActivity(data: NewActivity): Promise<Activity> {
+  return (
+    await api("/activities", { method: "POST", body: JSON.stringify(data) })
+  ).json();
+}
+export async function updateActivity(
+  id: number,
+  data: Partial<NewActivity>,
+): Promise<Activity> {
+  return (
+    await api("/activities/" + id, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    })
+  ).json();
+}
+export async function deleteActivity(id: number) {
+  await api("/activities/" + id, { method: "DELETE" });
 }

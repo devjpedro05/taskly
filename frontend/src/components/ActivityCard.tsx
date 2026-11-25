@@ -7,13 +7,18 @@ interface ActivityCardProps {
   showActions?: boolean;
 }
 
-export function ActivityCard({ activity, showActions = false }: ActivityCardProps) {
+export function ActivityCard({
+  activity,
+  showActions = false,
+}: ActivityCardProps) {
   return (
     <article className="activity-item">
       <header className="activity-header">
         <div>
           <p className="activity-subject">{activity.subject}</p>
-          <h3>{activity.title}</h3>
+          <h3>
+            <Link to={`/atividades/${activity.id}`}>{activity.title}</Link>
+          </h3>
         </div>
         <span className={`status status-${activity.status.toLowerCase()}`}>
           {statusLabels[activity.status]}
@@ -44,14 +49,9 @@ export function ActivityCard({ activity, showActions = false }: ActivityCardProp
           <Link className="text-link" to={`/atividades/${activity.id}/editar`}>
             Editar
           </Link>
-          <button
-            className="text-button danger"
-            type="button"
-            disabled
-            title="Exclusão será implementada em uma etapa futura"
-          >
-            Excluir
-          </button>
+          <Link className="text-link" to={`/atividades/${activity.id}`}>
+            Detalhes e subtarefas
+          </Link>
         </footer>
       )}
     </article>

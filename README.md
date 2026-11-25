@@ -4,151 +4,138 @@ Sistema Web para organização e gerenciamento de atividades acadêmicas.
 
 ## Sobre o projeto
 
-O Taskly é um projeto acadêmico incremental da disciplina Tecnologia de Construção de Software I. As primeiras etapas definiram a proposta e construíram o frontend navegável, responsivo e interativo. A Etapa 05 introduziu a comunicação HTTP com um serviço simulado; a Etapa 06 implementa a API REST de atividades com Express.
+Projeto incremental da disciplina Tecnologia de Construção de Software I. A Etapa 07 transforma a API Express em uma aplicação com SQLite, autenticação e registros separados por estudante.
 
-## Problema
+## Etapa atual
 
-Informações acadêmicas costumam ficar distribuídas entre anotações, mensagens, agendas e diferentes plataformas. Essa dispersão dificulta acompanhar pendências, prioridades, prazos e atividades de cada disciplina.
+**Etapa 07 — Persistência e CRUD com Banco de Dados.**
 
-## Objetivo
+## Funcionalidades e telas
 
-Permitir que estudantes cadastrem, organizem, acompanhem e consultem suas atividades acadêmicas de maneira centralizada.
+- Cadastro de usuário, login e logout por cookie HttpOnly.
+- Dashboard com pendências, conclusões, atrasos e próximas atividades reais.
+- Pesquisa e filtros por status, disciplina, categoria e prioridade.
+- Cadastro, edição e exclusão de atividades.
+- Gerenciamento de disciplinas e categorias.
+- Detalhes de atividades com criação, conclusão e exclusão de subtarefas.
+- Proteção das rotas e isolamento de dados por usuário.
 
-## Interfaces representadas
+As quatro novas telas são Login, Cadastro, Categorias e Detalhes da atividade. A justificativa funcional e acadêmica de cada uma está em [docs/etapa-07.md](docs/etapa-07.md#justificativa-das-novas-telas-e-alterações-na-interface).
 
-- Dashboard com resumo e próximas atividades;
-- listagem de atividades com pesquisa e filtros funcionais;
-- formulário com validação dos campos obrigatórios e cadastro pela API;
-- listagem de disciplinas e suas quantidades demonstrativas.
+## Tecnologias e banco de dados
 
-A listagem consulta atividades por GET e o cadastro envia por POST à API Express. A interface apresenta carregamento, sucesso e erro e aplica pesquisa e filtros no navegador. Dashboard, Disciplinas e edição demonstrativa continuam utilizando dados locais. PATCH e DELETE estão disponíveis pela API.
+Frontend: React, TypeScript, Vite, React Router, Fetch API e CSS convencional.
 
-## Tecnologias
+Backend: Node.js, TypeScript, Express, SQLite via better-sqlite3, bcryptjs e JWT em cookie HttpOnly. Não há ORM.
 
-### Frontend implementado
+Cinco tabelas relacionadas: **users, subjects, categories, activities e subtasks**. O esquema está em [backend/schema.sql](backend/schema.sql). O banco local é criado em `backend/data/taskly.sqlite` e preserva os dados depois de reiniciar.
 
-- React;
-- TypeScript;
-- Vite;
-- React Router;
-- CSS convencional;
-- Fetch API para enviar e receber JSON por HTTP.
+## Execução local
 
-### Backend e banco de dados
+Pré-requisito: **Node.js 22.12+**. A instalação e o driver SQLite foram validados com Node.js 24.3.0.
 
-Node.js, TypeScript e Express implementam o servidor; CORS permite acesso pelo frontend local e `tsx` executa TypeScript em desenvolvimento. Os dados ficam em memória e voltam às três atividades iniciais ao reiniciar a API. SQLite continua previsto para uma etapa futura.
+Terminal 1, a partir da raiz do repositório:
 
-## Estrutura do projeto
-
-```text
-taskly/
-├── backend/
-│   ├── src/               # servidor, rotas, tipos e dados em memória
-│   └── package.json
-├── docs/
-│   ├── proposta.md
-│   ├── arquitetura.md
-│   ├── etapa-02.md
-│   ├── etapa-03.md
-│   ├── etapa-04.md
-│   ├── etapa-05.md
-│   ├── etapa-06.md
-│   ├── postman/
-│   ├── evidencias/
-│   │   ├── etapa-03/       # nove capturas responsivas
-│   │   ├── etapa-04/       # cinco capturas de interatividade
-│   │   └── etapa-05/       # cinco capturas de comunicação assíncrona
-│   └── evidencias.md
-├── frontend/
-│   ├── mock-api/db.json    # base histórica da Etapa 05
-│   ├── src/
-│   │   ├── components/
-│   │   ├── data/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── styles/
-│   │   ├── types/
-│   │   ├── App.tsx
-│   │   └── main.tsx
-│   └── package.json
-├── tests/                 # reservado para testes futuros
-├── .gitignore
-└── README.md
-```
-
-## Documentação
-
-- [Proposta e especificação inicial](docs/proposta.md)
-- [Arquitetura atual](docs/arquitetura.md)
-- [Etapa 02 — Protótipo estrutural](docs/etapa-02.md)
-- [Etapa 03 — Interface responsiva](docs/etapa-03.md)
-- [Etapa 04 — Interatividade com JavaScript](docs/etapa-04.md)
-- [Etapa 05 — Modularização e Comunicação Assíncrona](docs/etapa-05.md)
-- [Etapa 06 — API REST da Aplicação](docs/etapa-06.md)
-- [Coleção Postman da Etapa 06](docs/postman/Taskly-Etapa-06.postman_collection.json)
-- [Evidências](docs/evidencias.md)
-
-## Execução
-
-Pré-requisito: Node.js 20.19 ou superior na linha 20, ou 22.12 ou superior. Abra dois terminais na raiz `taskly`.
-
-Terminal 1 — API Express:
-
-```bash
+```powershell
 cd backend
 npm install
+Copy-Item .env.example .env
+node -e "console.log(require('node:crypto').randomBytes(48).toString('hex'))"
+```
+
+Copie o valor gerado para `JWT_SECRET` no arquivo `.env`. Preserve o arquivo se já houver configuração local. As demais variáveis são `FRONTEND_ORIGIN=http://localhost:5173` e `DB_PATH=data/taskly.sqlite`.
+
+```powershell
+npm run db:init
 npm run dev
 ```
 
-Terminal 2 — interface:
+A inicialização cria as tabelas quando necessário, sem apagar registros. O primeiro usuário deve ser criado na tela de cadastro; não há senha padrão.
 
-```bash
+Terminal 2, também a partir da raiz:
+
+```powershell
 cd frontend
 npm install
 npm run dev
 ```
 
-Mantenha os dois terminais ativos. O Vite informa o endereço da interface. A API está em `http://localhost:3001`. O JSON Server foi preservado para reproduzir a Etapa 05; não execute `npm run mock-api` com o Express na mesma porta.
+Abra **http://localhost:5173**. A API usa http://localhost:3001. Use o hostname e porta configurados em FRONTEND_ORIGIN. Não execute JSON Server junto com Express na porta 3001.
 
-Para validar a tipagem e gerar o build, execute em cada pasta (`backend` e `frontend`):
+Para compilar, execute `npm run typecheck` e `npm run build` em cada pasta. `npm start`, em backend, inicia o código compilado usando o mesmo `.env`.
 
-```bash
-npm run typecheck
-npm run build
+## Estrutura
+
+```text
+backend/
+├── schema.sql
+├── .env.example
+├── data/                   # banco local ignorado pelo Git
+└── src/
+    ├── database/           # conexão e SQL por entidade
+    ├── routes/             # validação e contratos HTTP
+    ├── auth.ts
+    ├── validation.ts
+    ├── types.ts
+    └── server.ts
+frontend/src/
+├── components/
+├── pages/
+├── services/               # Fetch com credenciais
+├── styles/
+└── types/
+docs/
+├── etapa-07.md
+├── arquitetura.md
+├── postman/
+└── evidencias/etapa-07/
+tests/stage07.cjs
 ```
 
-A partir de `backend`, `npm start` executa a versão compilada.
+## API e testes
 
-## Endpoints
+| Recurso | Endpoints |
+| --- | --- |
+| Auth | POST /auth/register, POST /auth/login, GET /auth/me, POST /auth/logout |
+| Atividades | GET/POST /activities; GET/PATCH/DELETE /activities/:id |
+| Disciplinas | GET/POST /subjects; PATCH/DELETE /subjects/:id |
+| Categorias | GET/POST /categories; PATCH/DELETE /categories/:id |
+| Subtarefas | GET/POST /activities/:activityId/subtasks; PATCH/DELETE /activities/:activityId/subtasks/:subtaskId |
 
-| Método | Rota | Sucesso |
-| --- | --- | --- |
-| GET | `/activities` | `200` — lista de atividades |
-| GET | `/activities/:id` | `200` — atividade encontrada |
-| POST | `/activities` | `201` — atividade criada |
-| PATCH | `/activities/:id` | `200` — atividade atualizada |
-| DELETE | `/activities/:id` | `204` — exclusão sem corpo |
+Recursos exigem sessão. Nas escritas, envie Origin igual ao frontend configurado; no navegador isso é feito automaticamente. Erros seguem `{"error":"Mensagem."}`.
 
-Importe a [coleção Postman](docs/postman/Taskly-Etapa-06.postman_collection.json) ou consulte os [exemplos HTTP](docs/etapa-06.md#exemplos-de-requisições-e-respostas).
+Importe a [coleção Postman da Etapa 07](docs/postman/Taskly-Etapa-07.postman_collection.json), configure email e password e execute os grupos na ordem. O Postman mantém o cookie. O [guia da etapa](docs/etapa-07.md) descreve os corpos, status, SQL e reprodução dos testes.
 
-## Status do projeto
+O script [tests/stage07.cjs](tests/stage07.cjs) verifica HTTP, SQLite e interface com um banco temporário. A parte de navegador requer Playwright disponibilizado no NODE_PATH do ambiente de teste e Chrome; não é necessário para executar o Taskly. Compile o backend, inicie o frontend e deixe a porta 3001 livre antes de executar `node tests/stage07.cjs`.
 
-API Express com cinco operações sobre atividades. O frontend usa lista e cadastro; alteração e exclusão são demonstradas pela API. Sem banco de dados ou autenticação. O Dashboard e a página de Disciplinas permanecem demonstrativos.
+## Documentação e histórico
 
-## Etapa atual
+- [Proposta](docs/proposta.md)
+- [Arquitetura atual](docs/arquitetura.md)
+- [Etapa 02 — HTML semântico](docs/etapa-02.md)
+- [Etapa 03 — CSS responsivo](docs/etapa-03.md)
+- [Etapa 04 — Interatividade](docs/etapa-04.md)
+- [Etapa 05 — Comunicação assíncrona](docs/etapa-05.md)
+- [Etapa 06 — API REST em memória](docs/etapa-06.md)
+- [Etapa 07 — SQLite, autenticação e CRUD](docs/etapa-07.md)
+- [Evidências e validações](docs/evidencias.md)
 
-Etapa 06 — API REST da Aplicação.
+O JSON Server, o array demonstrativo e as coleções anteriores permanecem como histórico; a aplicação atual não usa esses dados como fonte.
 
 ## Roadmap
 
-- Etapa 01: proposta, especificação e arquitetura inicial;
-- Etapa 02: interfaces estruturais, navegação e HTML semântico;
-- Etapa 03: CSS responsivo comprovado em desktop, tablet e smartphone;
-- Etapa 04: pesquisa, filtros e validação manual de formulário;
-- Etapa 05: modularização, Fetch API, GET/POST e estados da comunicação com serviço simulado;
-- Etapa 06: API REST Express com consulta, cadastro, alteração e exclusão de atividades em memória;
-- próximas etapas: persistência e demais incrementos conforme os requisitos da disciplina.
+- Etapa 01: proposta e especificação.
+- Etapa 02: interfaces e navegação semântica.
+- Etapa 03: responsividade.
+- Etapa 04: pesquisa, filtros e validação.
+- Etapa 05: comunicação HTTP com serviço simulado.
+- Etapa 06: API Express e CRUD em memória.
+- Etapa 07: SQLite, relacionamentos, autenticação e CRUD persistente.
+
+## Limitações
+
+Demonstração acadêmica local, sem preparação para produção. Não há OAuth, recuperação de senha, notificações ou organizações. O logout remove o cookie, mas não revoga cópias do JWT antes de sua expiração. A edição de título de subtarefa está disponível somente pela API. Revisões adicionais de segurança e operação seriam necessárias para produção.
 
 ## Licença
 
-A licença do projeto será definida em etapa futura.
+A licença será definida em etapa futura.

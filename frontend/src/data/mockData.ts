@@ -1,10 +1,11 @@
-import type { Activity, Subject } from "../types/domain";
+import type { Subject } from "../types/domain";
 
-export const activities: Activity[] = [
+export const activities = [
   {
     id: 1,
     title: "Trabalho API REST",
-    description: "Documentar os recursos e contratos previstos para a API do projeto.",
+    description:
+      "Documentar os recursos e contratos previstos para a API do projeto.",
     subject: "Tecnologia de Construção de Software I",
     category: "Trabalho",
     dueDate: "2026-09-05",
@@ -26,7 +27,8 @@ export const activities: Activity[] = [
   {
     id: 3,
     title: "Projeto da disciplina",
-    description: "Preparar a apresentação da primeira versão estrutural do projeto.",
+    description:
+      "Preparar a apresentação da primeira versão estrutural do projeto.",
     subject: "Algoritmos",
     category: "Projeto",
     dueDate: "2026-09-12",
